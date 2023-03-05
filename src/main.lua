@@ -109,6 +109,9 @@ function love.update(dt)
         end
         player_x = 400
     end
+    if player_y == 0 then
+        player_y_speed = math.max(1, -player_y_speed)
+    end
     if player_x < 0 then
         player_x = 0
     end
