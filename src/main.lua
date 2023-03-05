@@ -48,6 +48,9 @@ function calculate_height()
         left_side = right_side + 1
         right_side = right_side + platform_width
     end
+    if current_highest == 600 then
+        return 600 + player_size + 50
+    end
     return current_highest
 end
 
@@ -78,6 +81,7 @@ function love.update(dt)
 
     if player_y_speed > 0 and floor_level > player_y + player_size + 1 then
         player_y_speed = player_y_speed + 1
+        jump_in_progress = true
     end
     player_x = player_x + player_x_speed
     new_height = calculate_height()
@@ -94,7 +98,7 @@ function love.update(dt)
         --global_x = player_x - 400
         platform_offset = platform_offset + player_x - 400
         while platform_offset >= platform_width do
-                if new_height == 600 and
+                if new_height >= 600 and
                     last_scored_tile < current_platform then
                     score = score + 1
                     last_scored_tile = current_platform
@@ -120,7 +124,8 @@ function love.update(dt)
         player_y = floor_level-player_size -1
         jump_in_progress = false
     end
-    if player_y > 600-player_size-5 then
+    if player_y >= 599 then 
+        -- 600-player_size-5 then
         death_count = death_count + 1
         player_x = player_x - platform_width
     end
