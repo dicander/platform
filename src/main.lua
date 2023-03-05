@@ -146,8 +146,10 @@ function love.draw()
     love.graphics.print("YOU WIN! Please keep playing", 300, 150)
     end
     -- Draw our hero
+    love.graphics.setColor(0, 255, 0, 255);
     love.graphics.rectangle('fill', player_x, player_y, 
                                 player_size, player_size)
+    love.graphics.setColor(255, 255, 255, 255);
     -- Draw the ground
     left_side = 0
     right_side = platform_width - platform_offset
