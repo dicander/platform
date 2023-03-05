@@ -130,7 +130,7 @@ function love.update(dt)
     if player_y >= 599 then 
         -- 600-player_size-5 then
         death_count = death_count + 1
-        if player_x < 300 then
+        if player_x < 390 then
             player_x = player_x + platform_width
         else
             player_x = player_x - platform_width
