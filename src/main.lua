@@ -111,7 +111,7 @@ function love.update(dt)
     end
     if player_y == 0 then
         player_y_speed = math.max(1, -player_y_speed)
-    end
+    end 
     if player_x < 0 then
         player_x = 0
     end
@@ -130,7 +130,11 @@ function love.update(dt)
     if player_y >= 599 then 
         -- 600-player_size-5 then
         death_count = death_count + 1
-        player_x = player_x - platform_width
+        if player_x < 300 then
+            player_x = player_x + platform_width
+        else
+            player_x = player_x - platform_width
+        end
     end
         
     --while platform_offset >= platform_width do
