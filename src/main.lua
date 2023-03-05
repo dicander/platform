@@ -20,6 +20,7 @@ jump_in_progress = false
 jump_max_height = 300
 jump_remaining = 0
 score = 0
+score_to_collect = 0
 last_scored_tile = 1
 death_count = 0
 
@@ -100,7 +101,7 @@ function love.update(dt)
         while platform_offset >= platform_width do
                 if new_height >= 600 and
                     last_scored_tile < current_platform then
-                    score = score + 1
+                    score_to_collect = score_to_collect + 1
                     last_scored_tile = current_platform
                 end
                 current_platform = current_platform + 1
@@ -125,11 +126,14 @@ function love.update(dt)
     end
     if player_y + player_size + 1 >= floor_level then
         player_y = floor_level-player_size -1
+        score = score + score_to_collect
+        score_to_collect = 0
         jump_in_progress = false
     end
     if player_y >= 599 then 
         -- 600-player_size-5 then
         death_count = death_count + 1
+        score_to_collect = 0
         if player_x < 390 then
             player_x = player_x + platform_width
         else
