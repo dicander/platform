@@ -1,6 +1,6 @@
 -- a simple platform game 
 
-dt = 0.0166666666666666666
+dt = 0.0166666666666666666/1000
 
 screen_width = 800
 screen_height = 600
@@ -31,6 +31,9 @@ function love.load()
             platforms[i] = 600
         end
     end
+    min_dt = 1/60
+    next_time = love.timer.getTime()
+
 end
 
 function calculate_height()
@@ -58,6 +61,7 @@ end
 
 
 function love.update(dt)
+    next_time = next_time + min_dt
     if love.keyboard.isDown("e") then
         if not jump_in_progress then
             jump_in_progress = true
@@ -125,7 +129,7 @@ function love.update(dt)
         player_y_speed = player_y_speed + 1
     end
     if player_y + player_size + 1 >= floor_level then
-        player_y = floor_level-player_size -1
+        player_y = floor_level - player_size - 1
         score = score + score_to_collect
         score_to_collect = 0
         jump_in_progress = false
@@ -139,12 +143,12 @@ function love.update(dt)
         else
             player_x = player_x - platform_width
         end
-    end
-        
+    end 
     --while platform_offset >= platform_width do
     --        current_platform = current_platform + 1
     --        platform_offset = platform_offset - platform_width
     --end
+    
 end
 
 function love.draw()
@@ -173,5 +177,11 @@ function love.draw()
         end
         left_side = right_side + 1
         right_side = right_side + platform_width
-    end 
+    end
+    local cur_time = love.timer.getTime()
+    if next_time <= cur_time then
+        next_time = cur_time
+        return
+    end
+    love.timer.sleep(next_time - cur_time)
 end
